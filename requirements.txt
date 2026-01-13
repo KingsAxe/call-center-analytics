@@ -1,0 +1,23 @@
+# Database
+psycopg2-binary
+python-dotenv
+pandas
+numpy
+
+# NLP & ML
+transformers
+torch
+spacy
+sentence-transformers
+scikit-learn
+hdbscan
+
+# # Visualization & Notebooks
+# matplotlib
+# seaborn
+# ipykernel
+# plotly
+
+# # API 
+# fastapi
+# uvicorn

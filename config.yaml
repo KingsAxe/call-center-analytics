@@ -1,0 +1,32 @@
+# config.yaml
+project_name: CallSense-AI
+
+database:
+  type: "postgresql"
+  table_name: "call_logs"
+  # We reference keys that our code will look for in .env
+  required_env_vars: ["DB_HOST", "DB_NAME", "DB_USER", "DB_PASSWORD", "DB_PORT"]
+
+data_specs:
+  issue_categories: ['billing_issue', 'tech_support', 'cancellation_request', 'update_info', 'complaint']
+  customer_personas: ['elderly', 'business_professional', 'tech_savvy', 'frustrated_customer']
+  transcript_column: "transcript_json"
+  target_column: "csat_score"
+
+nlp:
+  # Using a more robust model for production-grade embeddings
+  embedding_model: "sentence-transformers/all-mpnet-base-v2" 
+  sentiment_model: "cardiffnlp/twitter-roberta-base-sentiment-latest"
+  pii_entities: ["PERSON", "PHONE_NUMBER", "EMAIL", "CREDIT_CARD"]
+  batch_size: 32
+
+clustering:
+  algorithm: "HDBSCAN"
+  min_cluster_size: 15
+  min_samples: 5
+  metric: "cosine"
+
+paths:
+  raw_data_dir: "data/raw/"
+  processed_data_dir: "data/processed/"
+  model_artifacts: "models/weights/"

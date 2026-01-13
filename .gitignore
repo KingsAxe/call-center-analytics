@@ -1,0 +1,26 @@
+# Python virtualenv
+Lib/
+Scripts/
+Include/
+pyvenv.cfg
+
+# Python junk
+__pycache__/
+*.pyc
+
+# Jupyter
+.ipynb_checkpoints/
+
+# VS Code
+.vscode/
+
+# Data
+data/raw/
+data/processed/
+data/embeddings/
+
+# Logs
+*.log
+
+# OS
+.DS_Store
