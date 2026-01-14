@@ -18,6 +18,7 @@ __pycache__/
 data/raw/
 data/processed/
 data/embeddings/
+call-center-analytics/share/
 
 # Logs
 *.log

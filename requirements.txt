@@ -12,11 +12,13 @@ sentence-transformers
 scikit-learn
 hdbscan
 
-# # Visualization & Notebooks
-# matplotlib
-# seaborn
-# ipykernel
-# plotly
+# Visualization & Notebooks
+matplotlib
+seaborn
+ipykernel
+plotly
+umap-learn
+
 
 # # API 
 # fastapi
