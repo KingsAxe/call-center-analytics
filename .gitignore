@@ -3,7 +3,8 @@ Lib/
 Scripts/
 Include/
 pyvenv.cfg
-
+.env/
+.venv/
 # Python junk
 __pycache__/
 *.pyc
@@ -17,10 +18,16 @@ __pycache__/
 
 # Data
 data/raw/
-data/processed/
 data/embeddings/
 call-center-analytics/*
 call_center_analytics.egg-info/*
+
+# Ignore raw data (for privacy)
+data/raw/
+
+# ALLOW processed data to be uploaded
+!data/processed/clustered_data.csv
+!data/processed/executive_friction_scorecard.csv
 
 # Logs
 *.log
