@@ -22,8 +22,7 @@ data/embeddings/
 call-center-analytics/*
 call_center_analytics.egg-info/*
 
-# Ignore raw data (for privacy)
-data/raw/
+
 
 # ALLOW processed data to be uploaded
 !data/processed/clustered_data.csv
