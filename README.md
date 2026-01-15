@@ -37,35 +37,30 @@ Data Pipeline: PostgreSQL (JSONB), Pandas, NumPy.
 Interface: Streamlit & Plotly.
 
 ## **How to Run**
-1. Environment Setup
+1. **Environment Setup**
 Bash
 
 git clone https://github.com/your-username/call-center-analytics.git
 pip install -r requirements.txt
-2. Pipeline Execution (Sequential)
-The project is structured as a state-driven pipeline. Each step must be run to generate the checkpoint files for the next:
 
-notebooks/01_eda_and_sql.ipynb: Connects to DB, engineers behavioral features, and exports analytics_base.csv.
+2. **Pipeline Execution (Sequential)**
+The project is structured as a state-driven pipeline. Each step must be run to generate the checkpoint files for the 
 
-notebooks/02_clustering_exploration.ipynb: Performs PII redaction, generates embeddings, and discovers archetypes. Exports clustered_data.csv.
+next:
 
-notebooks/03_nlp_performance_report.ipynb: Validates clusters via Silhouette Scores and creates the final executive_friction_scorecard.csv.
+- notebooks/01_eda_and_sql.ipynb: Connects to DB, engineers behavioral features, and exports analytics_base.csv.
 
-3. Launching the Dashboard
+
+- notebooks/02_clustering_exploration.ipynb: Performs PII redaction, generates embeddings, and discovers archetypes.     Exports clustered_data.csv.
+
+
+- notebooks/03_nlp_performance_report.ipynb: Validates clusters via Silhouette Scores and creates the final              executive_friction_scorecard.csv.
+
+3. **Launching the Dashboard**
 Once the data checkpoints are created, launch the interactive decision-support system:
 
 Bash
 
 streamlit run app.py
-3. Strategy for the Next Step: Documentation.md
-Now that we have the "What" and "How" in the README, the Documentation.md (or RESEARCH_DEEP_DIVE.md) will be your "White Paper." This is where you talk like a Senior Architect.
 
-What we will include in the Documentation:
 
-Hyperparameter Justification: Why n_neighbors=50 for UMAP? Why min_cluster_size=100? (This proves you didn't just guess).
-
-Model Selection Trade-offs: Why MPNet over BERT for embeddings? (MPNet has better semantic search performance).
-
-The "Friction Index" Formula: A mathematical breakdown of how we combined Escalation, CSAT, and Volume into a single decision metric.
-
-Handling Challenges: How we solved the "General Inquiry" bias in Zero-Shot models.
