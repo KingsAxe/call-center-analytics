@@ -1,37 +1,62 @@
-# src/preprocessing/cleaner.py
+from transformers import pipeline
 import re
-import spacy
+from typing import List
 
 class TextSanitizer:
-    def __init__(self):
-        # Load a lightweight SpaCy model for Entity Recognition
-        try:
-            self.nlp = spacy.load("en_core_web_sm")
-        except:
-            # Fallback if model isn't downloaded
-            import os
-            os.system("python -m spacy download en_core_web_sm")
-            self.nlp = spacy.load("en_core_web_sm")
+    def __init__(self, device=-1):
+        """
+        device = -1  → CPU
+        device = 0   → GPU (if available)
+        """
+        self.ner_pipeline = pipeline(
+            "ner",
+            model="dslim/bert-base-NER",
+            aggregation_strategy="simple",
+            device=device
+        )
 
-    def redact_pii(self, text: str) -> str:
-        """Redacts Names, Emails, and Account Numbers."""
-        # 1. Redact Emails using Regex
-        text = re.sub(r'\S+@\S+', '[EMAIL]', text)
+        # Precompile regex for performance
+        self.email_pattern = re.compile(r'\S+@\S+')
+        self.account_pattern = re.compile(r'ACC-\d+')
         
-        # 2. Redact Account Numbers (Pattern: ACC-XXXXX)
-        text = re.sub(r'ACC-\d+', '[ACCOUNT_ID]', text)
-        
-        # 3. Redact Names using SpaCy NER
-        doc = self.nlp(text)
-        sanitized_text = text
-        for ent in doc.ents:
-            if ent.label_ in ["PERSON"]:
-                sanitized_text = sanitized_text.replace(ent.text, f"[{ent.label_}]")
-        
-        return sanitized_text
+        # Expanded Address Pattern: Captures Number + Name + Street Suffix
+        self.address_pattern = re.compile(
+            r'\d{1,5}\s\w+\s(way|street|st|ave|avenue|road|rd|lane|ln|drive|dr|court|ct|square|sq|boulevard|blvd)', 
+            re.IGNORECASE
+        )
 
-    def clean_transcript(self, text: str) -> str:
-        """General text cleaning (lowercase, remove extra whitespace)."""
-        text = text.lower().strip()
-        text = re.sub(r'\s+', ' ', text)
+    def _regex_redact(self, text: str) -> str:
+        """Stage 1: Fast regex-based redaction for predictable patterns."""
+        text = self.email_pattern.sub("[EMAIL]", text)
+        text = self.account_pattern.sub("[ACCOUNT_ID]", text)
+        text = self.address_pattern.sub("[ADDRESS]", text)
         return text
+
+    def batch_redact(self, texts: List[str], batch_size: int = 16) -> List[str]:
+        """Stage 2: Transformer-based NER for names and complex entities."""
+
+        # Step 1: Regex pass
+        regex_cleaned = [self._regex_redact(t) for t in texts]
+
+        # Step 2: Transformer pass (NER)
+        ner_results = self.ner_pipeline(regex_cleaned, batch_size=batch_size)
+
+        redacted_texts = []
+
+        for text, entities in zip(regex_cleaned, ner_results):
+            # Replace PERSON entities safely from right-to-left to maintain index accuracy
+            for ent in sorted(entities, key=lambda x: x['start'], reverse=True):
+                if ent["entity_group"] == "PER":
+                    text = text[:ent["start"]] + "[PERSON]" + text[ent["end"]:]
+            redacted_texts.append(text)
+
+        return redacted_texts
+
+    def clean_batch(self, texts: List[str]) -> List[str]:
+        """Normalization: Lowercase, stripping, and whitespace collapse."""
+        cleaned = []
+        for t in texts:
+            t = t.lower().strip()
+            t = re.sub(r"\s+", " ", t)
+            cleaned.append(t)
+        return cleaned

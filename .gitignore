@@ -8,6 +8,7 @@ pyvenv.cfg
 __pycache__/
 *.pyc
 
+
 # Jupyter
 .ipynb_checkpoints/
 
@@ -18,10 +19,14 @@ __pycache__/
 data/raw/
 data/processed/
 data/embeddings/
-call-center-analytics/share/
+call-center-analytics/*
+call_center_analytics.egg-info/*
 
 # Logs
 *.log
 
 # OS
 .DS_Store
+
+# Dev files
+./tests/*

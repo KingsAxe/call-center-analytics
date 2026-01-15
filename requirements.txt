@@ -7,7 +7,8 @@ numpy
 # NLP & ML
 transformers
 torch
-spacy
+# spacy
+# en-core-web-sm
 sentence-transformers
 scikit-learn
 hdbscan
@@ -20,6 +21,6 @@ plotly
 umap-learn
 
 
-# # API 
-# fastapi
-# uvicorn
+# Utilities
+pyyaml
+python-dotenv
