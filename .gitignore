@@ -1,8 +1,8 @@
 # Python virtualenv
-Lib/
-Scripts/
-Include/
-pyvenv.cfg
+/Lib/
+/Scripts/
+/Include/
+/pyvenv.cfg
 .env/
 .venv/
 # Python junk

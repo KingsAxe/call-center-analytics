@@ -27,7 +27,7 @@ WHITE  = "#FFFFFF"
 BG     = "#F8FAFC"
 BORDER = "#E2E8F0"
 
-st.markdown(f"""
+st.html(f"""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
@@ -137,7 +137,7 @@ h3 {{ color: {TEAL};  font-weight: 600; }}
 /* ── Dataframe ── */
 [data-testid="stDataFrame"] {{ border-radius: 8px; border: 1px solid {BORDER}; }}
 </style>
-""", unsafe_allow_html=True)
+""")
 
 # ─────────────────────────────────────────────────────────────
 # HELPERS
@@ -194,7 +194,7 @@ def styled_scatter(fig):
 # SIDEBAR
 # ─────────────────────────────────────────────────────────────
 with st.sidebar:
-    st.markdown(f"""
+    st.html(f"""
     <div style='text-align:center; padding: 1rem 0 0.5rem;'>
         <div style='background:{TEAL}; width:52px; height:52px; border-radius:14px;
                     display:flex; align-items:center; justify-content:center;
@@ -203,7 +203,7 @@ with st.sidebar:
         <div style='font-size:0.75rem; color:#94A3B8; font-weight:500;'>Business Intelligence Platform</div>
     </div>
     <hr style='border:none; border-top:1px solid {BORDER}; margin:0.75rem 0;'>
-    """, unsafe_allow_html=True)
+    """)
 
     menu = st.radio(
         "Navigation",
@@ -212,7 +212,7 @@ with st.sidebar:
         label_visibility="collapsed"
     )
 
-    st.markdown(f"""
+    st.html(f"""
     <hr style='border:none; border-top:1px solid {BORDER}; margin:0.75rem 0;'>
     <div style='font-size:0.72rem; color:#94A3B8; padding:0 0.25rem;'>
         <div style='font-weight:700; color:{GRAY}; margin-bottom:4px;'>Model Stack</div>
@@ -221,7 +221,7 @@ with st.sidebar:
         🛡️ BERT-NER — PII Redaction<br>
         📐 UMAP + HDBSCAN — Clustering
     </div>
-    """, unsafe_allow_html=True)
+    """)
 
 # ─────────────────────────────────────────────────────────────
 # LOAD DATA
@@ -239,17 +239,16 @@ page = menu.split("  ", 1)[-1]   # strip icon prefix
 # ─────────────────────────────────────────────────────────────
 if page == "Problem":
     st.markdown(f"# 🏠 From Business Problem to Clear Requirements")
-    st.markdown(
+    st.html(
         f"<div style='color:#64748B; font-size:0.95rem; margin-bottom:1.5rem;'>"
-        f"A live walkthrough of the analytical framework applied in the CallSense-AI case study.</div>",
-        unsafe_allow_html=True
+        f"A live walkthrough of the analytical framework applied in the CallSense-AI case study.</div>"
     )
 
     # ── The Problem ──
-    st.markdown(f"<div class='section-header'>⚠️ Step 1 — The Business Problem</div>", unsafe_allow_html=True)
+    st.html(f"<div class='section-header'>⚠️ Step 1 — The Business Problem</div>")
     c1, c2 = st.columns(2)
     with c1:
-        st.markdown(f"""
+        st.html(f"""
         <div class='framework-box'>
             <div class='step-label'>Symptoms Reported</div>
             <h4>What leadership saw</h4>
@@ -258,9 +257,9 @@ if page == "Problem":
                 <li>Customer reviews trending negative</li>
                 <li>Support call volume increasing</li>
             </ul>
-        </div>""", unsafe_allow_html=True)
+        </div>""")
     with c2:
-        st.markdown(f"""
+        st.html(f"""
         <div class='framework-box'>
             <div class='step-label'>The Real Question</div>
             <h4>What was actually driving churn?</h4>
@@ -269,10 +268,10 @@ if page == "Problem":
                 <li>Was it a pricing / billing friction?</li>
                 <li>Was it a customer support failure?</li>
             </ul>
-        </div>""", unsafe_allow_html=True)
+        </div>""")
 
     # ── Stakeholders ──
-    st.markdown(f"<div class='section-header'>👥 Step 2 — Stakeholders Identified</div>", unsafe_allow_html=True)
+    st.html(f"<div class='section-header'>👥 Step 2 — Stakeholders Identified</div>")
     cols = st.columns(4)
     stakeholders = [
         ("Customer Support", "Needed visibility into ticket patterns and escalation triggers"),
@@ -281,18 +280,19 @@ if page == "Problem":
         ("Leadership",       "Needed an ROI-linked view of operational friction costs"),
     ]
     for col, (name, desc) in zip(cols, stakeholders):
-        col.markdown(f"""
+        with col:
+            st.html(f"""
         <div class='framework-box'>
             <div class='step-label'>Stakeholder</div>
             <h4>{name}</h4>
             <p style='font-size:0.82rem; color:#475569; margin:0;'>{desc}</p>
-        </div>""", unsafe_allow_html=True)
+        </div>""")
 
     # ── Requirements ──
-    st.markdown(f"<div class='section-header'>⚙️ Step 3 — Requirements Identified</div>", unsafe_allow_html=True)
+    st.html(f"<div class='section-header'>⚙️ Step 3 — Requirements Identified</div>")
     r1, r2 = st.columns(2)
     with r1:
-        st.markdown(f"""
+        st.html(f"""
         <div class='framework-box'>
             <div class='step-label'>Data Requirements</div>
             <h4>What we needed to know</h4>
@@ -301,9 +301,9 @@ if page == "Problem":
                 <li>Root causes of escalations — beyond just call volume</li>
                 <li>Recurring friction patterns across support archetypes</li>
             </ul>
-        </div>""", unsafe_allow_html=True)
+        </div>""")
     with r2:
-        st.markdown(f"""
+        st.html(f"""
         <div class='framework-box'>
             <div class='step-label'>Technical Requirements</div>
             <h4>What we needed to build</h4>
@@ -312,10 +312,10 @@ if page == "Problem":
                 <li>PII redaction before any downstream processing</li>
                 <li>Unsupervised clustering to surface hidden intent archetypes</li>
             </ul>
-        </div>""", unsafe_allow_html=True)
+        </div>""")
 
     # ── Success Metrics ──
-    st.markdown(f"<div class='section-header'>📊 Step 4 — Success Metrics</div>", unsafe_allow_html=True)
+    st.html(f"<div class='section-header'>📊 Step 4 — Success Metrics</div>")
 
     avg_csat     = df['csat_score'].mean()
     top_archetype = sc.sort_values('Friction_Index', ascending=False).iloc[0]['archetype_name']
@@ -331,31 +331,31 @@ if page == "Problem":
     m4.metric("Total Call Cost",        f"${total_cost:,.0f}",  delta="Monthly exposure", delta_color="inverse")
 
     # ── Key Discovery ──
-    st.markdown(f"<div class='section-header'>🔎 Key Discovery</div>", unsafe_allow_html=True)
+    st.html(f"<div class='section-header'>🔎 Key Discovery</div>")
     ka, kb, kc = st.columns(3)
     with ka:
-        st.markdown(f"""
+        st.html(f"""
         <div class='insight-card critical'>
             <div class='label'>Critical Finding</div>
             <div class='value red'>38% Escalations</div>
             <div class='desc'>Driven by Subscription Cancellations — only 25% of call volume</div>
-        </div>""", unsafe_allow_html=True)
+        </div>""")
     with kb:
-        st.markdown(f"""
+        st.html(f"""
         <div class='insight-card critical'>
             <div class='label'>ROI Impact</div>
             <div class='value red'>$3,400+/month</div>
             <div class='desc'>Lost to Talk-Ratio Overload in technical support calls</div>
-        </div>""", unsafe_allow_html=True)
+        </div>""")
     with kc:
-        st.markdown(f"""
+        st.html(f"""
         <div class='insight-card'>
             <div class='label'>Privacy Compliance</div>
             <div class='value'>100% PII</div>
             <div class='desc'>Redacted via BERT-NER before any downstream analysis</div>
-        </div>""", unsafe_allow_html=True)
+        </div>""")
 
-    st.markdown(f"<div class='section-header'>📊 Business Case Scorecard</div>", unsafe_allow_html=True)
+    st.html(f"<div class='section-header'>📊 Business Case Scorecard</div>")
     sc_sorted = sc.sort_values('Friction_Index', ascending=False)
     top_row = sc_sorted.iloc[0]
     s1, s2, s3, s4 = st.columns(4)
@@ -444,11 +444,10 @@ elif page == "__legacy_executive_summary__":
 # ─────────────────────────────────────────────────────────────
 elif page == "Intent Map":
     st.markdown("# 🗺️ Semantic Intent Clusters")
-    st.markdown(
+    st.html(
         f"<div style='color:#64748B; font-size:0.95rem; margin-bottom:1.5rem;'>"
         f"2D UMAP projection of 1,000 call transcripts. Each dot is a call; colour = AI-discovered archetype. "
-        f"The AI found these groupings with <b>zero human labelling</b>.</div>",
-        unsafe_allow_html=True
+        f"The AI found these groupings with <b>zero human labelling</b>.</div>"
     )
 
     # Colour palette matching slide theme
@@ -498,11 +497,10 @@ elif page == "Intent Map":
 # ─────────────────────────────────────────────────────────────
 elif page == "Friction Heatmap":
     st.markdown("# 🔥 Friction Heatmap — Archetype × KPI")
-    st.markdown(
+    st.html(
         f"<div style='color:#64748B; font-size:0.95rem; margin-bottom:1.5rem;'>"
         f"A cross-KPI risk matrix. Darker red = higher friction / business risk. "
-        f"Read row-by-row to identify which archetype needs intervention first.</div>",
-        unsafe_allow_html=True
+        f"Read row-by-row to identify which archetype needs intervention first.</div>"
     )
 
     sc_sorted = sc.sort_values('Friction_Index', ascending=False)
@@ -557,7 +555,7 @@ elif page == "Friction Heatmap":
     )
     st.plotly_chart(fig_heat, use_container_width=True)
 
-    st.markdown(f"<div class='section-header'>📈 Friction Index by Call Archetype</div>", unsafe_allow_html=True)
+    st.html(f"<div class='section-header'>📈 Friction Index by Call Archetype</div>")
     fig_bar = go.Figure(go.Bar(
         x=sc_sorted['archetype_name'],
         y=sc_sorted['Friction_Index'],
@@ -576,14 +574,14 @@ elif page == "Friction Heatmap":
     st.plotly_chart(fig_bar, use_container_width=True)
 
     # Ranked verdict
-    st.markdown(f"<div class='section-header'>🏆 Intervention Priority Ranking</div>", unsafe_allow_html=True)
+    st.html(f"<div class='section-header'>🏆 Intervention Priority Ranking</div>")
     ranked = sc.sort_values('Friction_Index', ascending=False).reset_index(drop=True)
     for i, row in ranked.iterrows():
         badge_cls = "badge-high" if i == 0 else "badge-medium" if i == 1 else "badge-low"
         badge_txt = "HIGH RISK" if i == 0 else "MEDIUM" if i <= 2 else "LOW"
         cost_str  = f"${row['call_cost']:,.0f}" if 'call_cost' in row else "—"
         fri_str   = f"{row['Friction_Index']:.2f}"
-        st.markdown(f"""
+        st.html(f"""
         <div class='insight-card {"critical" if i == 0 else ""}'>
             <div style='display:flex; justify-content:space-between; align-items:center;'>
                 <div>
@@ -594,9 +592,9 @@ elif page == "Friction Heatmap":
                     Friction: <b style='color:{"#DC2626" if i==0 else TEAL};'>{fri_str}</b> &nbsp;|&nbsp; Cost: <b>{cost_str}</b>
                 </div>
             </div>
-        </div>""", unsafe_allow_html=True)
+        </div>""")
 
-    st.markdown(f"<div class='section-header'>📋 Full Archetype Scorecard</div>", unsafe_allow_html=True)
+    st.html(f"<div class='section-header'>📋 Full Archetype Scorecard</div>")
 
     def highlight_top(row):
         if row.name == sc_sorted.index[0]:
@@ -625,10 +623,9 @@ elif page == "Friction Heatmap":
 # ─────────────────────────────────────────────────────────────
 elif page == "Archetype Drilldown":
     st.markdown("# 🔍 Archetype Deep Dive")
-    st.markdown(
+    st.html(
         f"<div style='color:#64748B; font-size:0.95rem; margin-bottom:1.5rem;'>"
-        f"Select an archetype to inspect call-level behaviour, customer sentiment, and resolution patterns.</div>",
-        unsafe_allow_html=True
+        f"Select an archetype to inspect call-level behaviour, customer sentiment, and resolution patterns.</div>"
     )
 
     archetypes = sorted(df['archetype_name'].dropna().unique().tolist())
@@ -649,7 +646,7 @@ elif page == "Archetype Drilldown":
     col_l, col_r = st.columns([1.1, 1])
 
     with col_l:
-        st.markdown(f"<div class='section-header'>📊 CSAT Distribution vs. Overall Mean</div>", unsafe_allow_html=True)
+        st.html(f"<div class='section-header'>📊 CSAT Distribution vs. Overall Mean</div>")
         fig_hist = go.Figure()
         fig_hist.add_trace(go.Histogram(
             x=df['csat_score'], name="All Calls", opacity=0.4,
@@ -675,7 +672,7 @@ elif page == "Archetype Drilldown":
         st.plotly_chart(fig_hist, use_container_width=True)
 
     with col_r:
-        st.markdown(f"<div class='section-header'>📞 Talk Ratio Distribution</div>", unsafe_allow_html=True)
+        st.html(f"<div class='section-header'>📞 Talk Ratio Distribution</div>")
         if 'talk_ratio' in sub.columns:
             fig_box = go.Figure()
             fig_box.add_trace(go.Box(
@@ -698,34 +695,33 @@ elif page == "Archetype Drilldown":
             st.plotly_chart(fig_box, use_container_width=True)
 
     # Sample transcripts
-    st.markdown(f"<div class='section-header'>📝 Sample Redacted Transcripts</div>", unsafe_allow_html=True)
+    st.html(f"<div class='section-header'>📝 Sample Redacted Transcripts</div>")
     text_col = next((c for c in ['clean_text', 'sanitized_text', 'transcript'] if c in df.columns), None)
     if text_col:
         samples = sub[text_col].dropna().sample(min(4, len(sub)), random_state=42)
         for i, txt in enumerate(samples, 1):
-            st.markdown(f"""
+            st.html(f"""
             <div class='drilldown-card'>
                 <span style='font-weight:700; font-size:0.7rem; text-transform:uppercase;
                              letter-spacing:0.08em; color:#0D9488;'>Call Sample {i}</span><br>
                 {str(txt)[:300]}{"…" if len(str(txt)) > 300 else ""}
-            </div>""", unsafe_allow_html=True)
+            </div>""")
 
 # ─────────────────────────────────────────────────────────────
 # PAGE 5 — LIVE INFERENCE
 # ─────────────────────────────────────────────────────────────
 elif page == "Live Inference":
     st.markdown("# ⚡ Real-Time Call Analyzer")
-    st.markdown(
+    st.html(
         f"<div style='color:#64748B; font-size:0.95rem; margin-bottom:1.5rem;'>"
         f"Paste a raw call transcript. The AI pipeline will redact PII, detect intent, score friction, "
-        f"and recommend an action — in seconds.</div>",
-        unsafe_allow_html=True
+        f"and recommend an action — in seconds.</div>"
     )
 
     col_in, col_out = st.columns([1.1, 1])
 
     with col_in:
-        st.markdown(f"<div class='section-header'>✍️ Input</div>", unsafe_allow_html=True)
+        st.html(f"<div class='section-header'>✍️ Input</div>")
         raw_input = st.text_area(
             "Paste call transcript here:",
             placeholder="e.g. Hi, my name is John Smith, account ACC-98432. I've been charged twice this month and I want to cancel my subscription immediately...",
@@ -738,7 +734,7 @@ elif page == "Live Inference":
         run_btn = st.button("🔍 Analyse Call", use_container_width=True, type="primary")
 
     with col_out:
-        st.markdown(f"<div class='section-header'>📋 Call Report Card</div>", unsafe_allow_html=True)
+        st.html(f"<div class='section-header'>📋 Call Report Card</div>")
 
         if run_btn and raw_input.strip():
             with st.spinner("Running NLP pipeline…"):
@@ -769,7 +765,7 @@ elif page == "Live Inference":
                 st.plotly_chart(fig_conf, use_container_width=True)
 
             # Result cards
-            st.markdown(f"""
+            st.html(f"""
             <div class='insight-card {"critical" if risk=="HIGH" else ""}' style='margin-top:0.5rem;'>
                 <div style='display:flex; justify-content:space-between; align-items:flex-start;'>
                     <div>
@@ -788,7 +784,7 @@ elif page == "Live Inference":
                         <div style='font-weight:700;'>{res['confidence']:.1%}</div>
                     </div>
                 </div>
-            </div>""", unsafe_allow_html=True)
+            </div>""")
 
             # Recommended action
             actions = {
@@ -806,23 +802,20 @@ elif page == "Live Inference":
                     "🟢 Standard resolution. Log and close. No escalation required.",
             }
             action = actions.get(res['intent'], "🟢 Standard handling. Log and close.")
-            st.markdown(f"""
+            st.html(f"""
             <div class='framework-box' style='margin-top:0.75rem;'>
                 <div class='step-label'>Recommended Action</div>
                 <div style='font-size:0.88rem; color:{GRAY}; margin-top:4px;'>{action}</div>
-            </div>""", unsafe_allow_html=True)
+            </div>""")
 
             # Redacted transcript
             with st.expander("🛡️ View Redacted Transcript (PII Removed)"):
-                st.markdown(
-                    f"<div style='font-size:0.83rem; line-height:1.7; color:#475569;'>{res['clean_text']}</div>",
-                    unsafe_allow_html=True
-                )
+                st.html(f"<div style='font-size:0.83rem; line-height:1.7; color:#475569;'>{res['clean_text']}</div>")
 
         elif run_btn:
             st.warning("Please paste a transcript before running the analysis.")
         else:
-            st.markdown(f"""
+            st.html(f"""
             <div style='height:220px; display:flex; flex-direction:column;
                         align-items:center; justify-content:center;
                         border:2px dashed {BORDER}; border-radius:12px;
@@ -830,4 +823,4 @@ elif page == "Live Inference":
                 <div style='font-size:2rem;'>⚡</div>
                 <div>Paste a transcript and click <b>Analyse Call</b></div>
                 <div style='font-size:0.78rem;'>PII will be automatically redacted before analysis</div>
-            </div>""", unsafe_allow_html=True)
+            </div>""")
