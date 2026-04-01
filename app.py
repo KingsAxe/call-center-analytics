@@ -21,11 +21,14 @@ st.set_page_config(
 # ─────────────────────────────────────────────────────────────
 TEAL   = "#0D9488"
 TEAL_L = "#CCFBF1"
+TEAL_D = "#115E59"
 RED    = "#DC2626"
 GRAY   = "#2F2F2F"
 WHITE  = "#FFFFFF"
 BG     = "#F8FAFC"
 BORDER = "#E2E8F0"
+SLATE  = "#475569"
+SLATE_L = "#64748B"
 
 st.html(f"""
 <style>
@@ -56,7 +59,7 @@ html, body, [class*="css"] {{
 /* ── Radio nav ── */
 [data-testid="stSidebar"] .stRadio label {{
     font-size: 0.92rem;
-    font-weight: 500;
+    font-weight: 600;
     color: {GRAY};
     padding: 6px 0;
 }}
@@ -75,7 +78,7 @@ h3 {{ color: {TEAL};  font-weight: 600; }}
     padding: 1rem 1.2rem;
     box-shadow: 0 1px 4px rgba(0,0,0,0.06);
 }}
-[data-testid="stMetric"] label {{ color: #64748B; font-size: 0.78rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }}
+[data-testid="stMetric"] label {{ color: {SLATE}; font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; }}
 [data-testid="stMetric"] [data-testid="stMetricValue"] {{ color: {GRAY}; font-size: 1.9rem; font-weight: 800; }}
 
 /* ── Insight cards ── */
@@ -91,18 +94,22 @@ h3 {{ color: {TEAL};  font-weight: 600; }}
 .insight-card.critical {{ border-left-color: {RED}; }}
 .insight-card .label {{
     font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
-    letter-spacing: 0.08em; color: #94A3B8; margin-bottom: 4px;
+    letter-spacing: 0.08em; color: {SLATE}; margin-bottom: 4px;
 }}
 .insight-card .value {{ font-size: 1.45rem; font-weight: 800; color: {GRAY}; }}
 .insight-card .value.red {{ color: {RED}; }}
-.insight-card .desc {{ font-size: 0.83rem; color: #64748B; margin-top: 3px; }}
+.insight-card .desc {{ font-size: 0.83rem; color: {SLATE}; margin-top: 3px; line-height: 1.5; }}
 
 /* ── Section header ── */
 .section-header {{
     display: flex; align-items: center; gap: 8px;
-    border-bottom: 2px solid {TEAL_L};
-    padding-bottom: 6px; margin: 1.5rem 0 1rem;
-    font-size: 1.0rem; font-weight: 700; color: {GRAY};
+    background: linear-gradient(90deg, #ECFDF5 0%, #F8FAFC 100%);
+    border: 1px solid #A7F3D0;
+    border-left: 4px solid {TEAL_D};
+    border-radius: 10px;
+    padding: 0.7rem 0.9rem;
+    margin: 1.5rem 0 1rem;
+    font-size: 1.02rem; font-weight: 800; color: {TEAL_D};
 }}
 
 /* ── Framework box ── */
@@ -112,11 +119,17 @@ h3 {{ color: {TEAL};  font-weight: 600; }}
     box-shadow: 0 1px 4px rgba(0,0,0,0.05); height: 100%;
 }}
 .framework-box .step-label {{
-    font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
-    letter-spacing: 0.1em; color: {TEAL}; margin-bottom: 3px;
+    display: inline-block;
+    font-size: 0.72rem; font-weight: 800; text-transform: uppercase;
+    letter-spacing: 0.08em; color: {TEAL_D};
+    background: #DCFCE7;
+    border: 1px solid #86EFAC;
+    border-radius: 999px;
+    padding: 0.2rem 0.5rem;
+    margin-bottom: 0.45rem;
 }}
 .framework-box h4 {{ margin: 0 0 0.5rem; font-size: 0.95rem; color: {GRAY}; font-weight: 700; }}
-.framework-box ul {{ margin: 0; padding-left: 1.1rem; font-size: 0.83rem; color: #475569; }}
+.framework-box ul {{ margin: 0; padding-left: 1.1rem; font-size: 0.85rem; color: {SLATE}; line-height: 1.55; }}
 
 /* ── Risk badge ── */
 .badge {{
@@ -131,7 +144,7 @@ h3 {{ color: {TEAL};  font-weight: 600; }}
 .drilldown-card {{
     background: {TEAL_L}; border: 1px solid #99F6E4;
     border-radius: 10px; padding: 0.9rem 1.1rem;
-    margin-bottom: 0.6rem; font-size: 0.83rem; color: #134E4A;
+    margin-bottom: 0.6rem; font-size: 0.84rem; color: #134E4A; line-height: 1.6;
 }}
 
 /* ── Dataframe ── */
@@ -200,7 +213,7 @@ with st.sidebar:
                     display:flex; align-items:center; justify-content:center;
                     margin:0 auto 0.6rem; font-size:1.6rem;'>📞</div>
         <div style='font-weight:800; font-size:1.1rem; color:{GRAY};'>CallSense-AI</div>
-        <div style='font-size:0.75rem; color:#94A3B8; font-weight:500;'>Business Intelligence Platform</div>
+        <div style='font-size:0.78rem; color:{SLATE}; font-weight:600;'>Business Intelligence Platform</div>
     </div>
     <hr style='border:none; border-top:1px solid {BORDER}; margin:0.75rem 0;'>
     """)
@@ -214,7 +227,7 @@ with st.sidebar:
 
     st.html(f"""
     <hr style='border:none; border-top:1px solid {BORDER}; margin:0.75rem 0;'>
-    <div style='font-size:0.72rem; color:#94A3B8; padding:0 0.25rem;'>
+    <div style='font-size:0.76rem; color:{SLATE}; padding:0 0.25rem; line-height:1.6;'>
         <div style='font-weight:700; color:{GRAY}; margin-bottom:4px;'>Model Stack</div>
         🧠 MPNet — Embeddings<br>
         🎯 BART-MNLI — Classification<br>
@@ -240,7 +253,7 @@ page = menu.split("  ", 1)[-1]   # strip icon prefix
 if page == "Problem":
     st.markdown(f"# 🏠 From Business Problem to Clear Requirements")
     st.html(
-        f"<div style='color:#64748B; font-size:0.95rem; margin-bottom:1.5rem;'>"
+        f"<div style='color:{SLATE}; font-size:0.98rem; margin-bottom:1.5rem; line-height:1.6;'>"
         f"A live walkthrough of the analytical framework applied in the CallSense-AI case study.</div>"
     )
 
@@ -285,7 +298,7 @@ if page == "Problem":
         <div class='framework-box'>
             <div class='step-label'>Stakeholder</div>
             <h4>{name}</h4>
-            <p style='font-size:0.82rem; color:#475569; margin:0;'>{desc}</p>
+            <p style='font-size:0.84rem; color:{SLATE}; margin:0; line-height:1.55;'>{desc}</p>
         </div>""")
 
     # ── Requirements ──
@@ -445,7 +458,7 @@ elif page == "__legacy_executive_summary__":
 elif page == "Intent Map":
     st.markdown("# 🗺️ Semantic Intent Clusters")
     st.html(
-        f"<div style='color:#64748B; font-size:0.95rem; margin-bottom:1.5rem;'>"
+        f"<div style='color:{SLATE}; font-size:0.97rem; margin-bottom:1.5rem; line-height:1.6;'>"
         f"2D UMAP projection of 1,000 call transcripts. Each dot is a call; colour = AI-discovered archetype. "
         f"The AI found these groupings with <b>zero human labelling</b>.</div>"
     )
@@ -498,7 +511,7 @@ elif page == "Intent Map":
 elif page == "Friction Heatmap":
     st.markdown("# 🔥 Friction Heatmap — Archetype × KPI")
     st.html(
-        f"<div style='color:#64748B; font-size:0.95rem; margin-bottom:1.5rem;'>"
+        f"<div style='color:{SLATE}; font-size:0.97rem; margin-bottom:1.5rem; line-height:1.6;'>"
         f"A cross-KPI risk matrix. Darker red = higher friction / business risk. "
         f"Read row-by-row to identify which archetype needs intervention first.</div>"
     )
@@ -588,7 +601,7 @@ elif page == "Friction Heatmap":
                     <span class='badge {badge_cls}'>{badge_txt}</span>
                     <span style='font-weight:700; font-size:0.95rem; margin-left:8px;'>{row['archetype_name']}</span>
                 </div>
-                <div style='text-align:right; font-size:0.8rem; color:#64748B;'>
+                <div style='text-align:right; font-size:0.82rem; color:{SLATE};'>
                     Friction: <b style='color:{"#DC2626" if i==0 else TEAL};'>{fri_str}</b> &nbsp;|&nbsp; Cost: <b>{cost_str}</b>
                 </div>
             </div>
@@ -624,7 +637,7 @@ elif page == "Friction Heatmap":
 elif page == "Archetype Drilldown":
     st.markdown("# 🔍 Archetype Deep Dive")
     st.html(
-        f"<div style='color:#64748B; font-size:0.95rem; margin-bottom:1.5rem;'>"
+        f"<div style='color:{SLATE}; font-size:0.97rem; margin-bottom:1.5rem; line-height:1.6;'>"
         f"Select an archetype to inspect call-level behaviour, customer sentiment, and resolution patterns.</div>"
     )
 
@@ -703,7 +716,7 @@ elif page == "Archetype Drilldown":
             st.html(f"""
             <div class='drilldown-card'>
                 <span style='font-weight:700; font-size:0.7rem; text-transform:uppercase;
-                             letter-spacing:0.08em; color:#0D9488;'>Call Sample {i}</span><br>
+                             letter-spacing:0.08em; color:{TEAL_D};'>Call Sample {i}</span><br>
                 {str(txt)[:300]}{"…" if len(str(txt)) > 300 else ""}
             </div>""")
 
@@ -713,7 +726,7 @@ elif page == "Archetype Drilldown":
 elif page == "Live Inference":
     st.markdown("# ⚡ Real-Time Call Analyzer")
     st.html(
-        f"<div style='color:#64748B; font-size:0.95rem; margin-bottom:1.5rem;'>"
+        f"<div style='color:{SLATE}; font-size:0.97rem; margin-bottom:1.5rem; line-height:1.6;'>"
         f"Paste a raw call transcript. The AI pipeline will redact PII, detect intent, score friction, "
         f"and recommend an action — in seconds.</div>"
     )
@@ -810,7 +823,7 @@ elif page == "Live Inference":
 
             # Redacted transcript
             with st.expander("🛡️ View Redacted Transcript (PII Removed)"):
-                st.html(f"<div style='font-size:0.83rem; line-height:1.7; color:#475569;'>{res['clean_text']}</div>")
+                st.html(f"<div style='font-size:0.85rem; line-height:1.75; color:{SLATE};'>{res['clean_text']}</div>")
 
         elif run_btn:
             st.warning("Please paste a transcript before running the analysis.")
@@ -819,8 +832,8 @@ elif page == "Live Inference":
             <div style='height:220px; display:flex; flex-direction:column;
                         align-items:center; justify-content:center;
                         border:2px dashed {BORDER}; border-radius:12px;
-                        color:#94A3B8; font-size:0.9rem; text-align:center; gap:8px;'>
+                        color:{SLATE}; font-size:0.92rem; text-align:center; gap:8px;'>
                 <div style='font-size:2rem;'>⚡</div>
                 <div>Paste a transcript and click <b>Analyse Call</b></div>
-                <div style='font-size:0.78rem;'>PII will be automatically redacted before analysis</div>
+                <div style='font-size:0.8rem; color:{SLATE_L};'>PII will be automatically redacted before analysis</div>
             </div>""")
