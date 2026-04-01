@@ -51,17 +51,43 @@ html, body, [class*="css"] {{
     background: {WHITE};
     border-right: 1px solid {BORDER};
 }}
+[data-testid="stSidebar"] * {{
+    color: {GRAY} !important;
+}}
+[data-testid="stSidebar"] [data-testid="stMarkdownContainer"],
+[data-testid="stSidebar"] [data-testid="stMarkdownContainer"] p,
+[data-testid="stSidebar"] [data-testid="stMarkdownContainer"] div,
+[data-testid="stSidebar"] [data-testid="stMarkdownContainer"] span,
+[data-testid="stSidebar"] label,
+[data-testid="stSidebar"] label p,
+[data-testid="stSidebar"] .stRadio div,
+[data-testid="stSidebar"] .stRadio p {{
+    color: {GRAY} !important;
+}}
 [data-testid="stSidebar"] h1, [data-testid="stSidebar"] h2 {{
     color: {GRAY};
     font-weight: 700;
 }}
 
 /* ── Radio nav ── */
+[data-testid="stSidebar"] .stRadio > div {{
+    gap: 0.15rem;
+}}
 [data-testid="stSidebar"] .stRadio label {{
     font-size: 0.92rem;
     font-weight: 600;
-    color: {GRAY};
-    padding: 6px 0;
+    color: {GRAY} !important;
+    padding: 8px 10px;
+    border-radius: 10px;
+    background: rgba(13, 148, 136, 0.06);
+    border: 1px solid rgba(13, 148, 136, 0.12);
+}}
+[data-testid="stSidebar"] .stRadio label:hover {{
+    background: rgba(13, 148, 136, 0.1);
+}}
+[data-testid="stSidebar"] .stRadio input:checked + div {{
+    color: {TEAL_D} !important;
+    font-weight: 700 !important;
 }}
 
 /* ── Page title ── */

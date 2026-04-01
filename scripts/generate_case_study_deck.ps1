@@ -1,7 +1,10 @@
 $ErrorActionPreference = 'Stop'
 
-$outputPath = Join-Path $PSScriptRoot '..\CallSenseAI_Case_Study_Deck.pptx'
-$outputPath = [System.IO.Path]::GetFullPath($outputPath)
+$primaryOutputPath = Join-Path $PSScriptRoot '..\CallSenseAI_Case_Study_Deck.pptx'
+$primaryOutputPath = [System.IO.Path]::GetFullPath($primaryOutputPath)
+$fallbackOutputPath = Join-Path $PSScriptRoot '..\CallSenseAI_Case_Study_Deck_v2.pptx'
+$fallbackOutputPath = [System.IO.Path]::GetFullPath($fallbackOutputPath)
+$outputPath = $primaryOutputPath
 
 function Set-TextStyle {
     param(
@@ -23,6 +26,21 @@ function Add-Banner {
     $banner = $slide.Shapes.AddShape(1, 0, 0, $width, 24)
     $banner.Fill.ForeColor.RGB = 0x88940D
     $banner.Line.Visible = 0
+}
+
+function Add-Brand {
+    param(
+        $slide,
+        [float]$width,
+        [int]$rgb
+    )
+
+    $brand = $slide.Shapes.AddTextbox(1, $width - 124, 12, 96, 18)
+    $brand.TextFrame.TextRange.Text = 'AscendX'
+    Set-TextStyle -range $brand.TextFrame.TextRange -size 11 -fontName 'Aptos' -rgb $rgb -bold $true
+    $brand.TextFrame.TextRange.ParagraphFormat.Alignment = 3
+    $brand.Line.Visible = 0
+    $brand.Fill.Visible = 0
 }
 
 $slides = @(
@@ -217,6 +235,7 @@ try {
         if ($item.Layout -eq 1) {
             $slide.FollowMasterBackground = $false
             $slide.Background.Fill.ForeColor.RGB = 0x88940D
+            Add-Brand -slide $slide -width $width -rgb 0xFFFFFF | Out-Null
 
             $titleRange = $slide.Shapes.Title.TextFrame.TextRange
             $titleRange.Text = $item.Title
@@ -231,6 +250,7 @@ try {
             $slide.FollowMasterBackground = $false
             $slide.Background.Fill.ForeColor.RGB = 0xFAFCF8
             Add-Banner -slide $slide -width $width | Out-Null
+            Add-Brand -slide $slide -width $width -rgb 0x115E59 | Out-Null
 
             $titleRange = $slide.Shapes.Title.TextFrame.TextRange
             $titleRange.Text = $item.Title
@@ -258,8 +278,13 @@ try {
         }
     }
 
-    if (Test-Path -LiteralPath $outputPath) {
-        Remove-Item -LiteralPath $outputPath -Force
+    if (Test-Path -LiteralPath $primaryOutputPath) {
+        try {
+            Remove-Item -LiteralPath $primaryOutputPath -Force
+        }
+        catch {
+            $outputPath = $fallbackOutputPath
+        }
     }
 
     $presentation.SaveAs($outputPath)
