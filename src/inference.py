@@ -33,30 +33,22 @@ class CallAnalyticsEngine:
         ]
 
     def analyze_call(self, raw_transcript: str, talk_ratio: float = 0.5, duration: int = 300) -> Dict:
-            # 1. Sanitize (Ensure your cleaner.py handles addresses - see below)
-            redacted_list = self.sanitizer.batch_redact([raw_transcript])
-            clean_text = self.sanitizer.clean_batch(redacted_list)[0]
+        # 1. Sanitize (Ensure your cleaner.py handles addresses - see below)
+        redacted_list = self.sanitizer.batch_redact([raw_transcript])
+        clean_text = self.sanitizer.clean_batch(redacted_list)[0]
 
-            # 2. Classify Intent
-            classification = self.classifier(clean_text, self.candidate_labels)
-            
-            # Logic Fix: If 'General' is the top but second is close, consider a deeper check
-            # For now, we'll just use the expanded labels which usually fixes the 404 issue
-            top_intent = classification['labels'][0]
-            confidence = classification['scores'][0]
-            
-            # 3. Probability Distribution for UI
-            all_scores = dict(zip(classification['labels'], classification['scores']))
+        # 2. Classify Intent
+        classification = self.classifier(clean_text, self.candidate_labels)
+        
+        # Logic Fix: If 'General' is the top but second is close, consider a deeper check
+        # For now, we'll just use the expanded labels which usually fixes the 404 issue
+        top_intent = classification['labels'][0]
+        confidence = classification['scores'][0]
+        
+        # 3. Probability Distribution for UI
+        all_scores = dict(zip(classification['labels'], classification['scores']))
 
-            # ... (keep existing risk logic)
-            return {
-                "clean_text": clean_text,
-                "intent": top_intent,
-                "confidence": round(confidence, 4),
-                "all_scores": all_scores, # ADDED for the new UI dropdown
-                "risk_level": risk_level,
-                "risk_score": risk_score
-            }
+        # ... (keep existing risk logic)
 
 
     def process_transcript(self, raw_transcript: str) -> Dict[str, Union[str, float, List]]:
@@ -85,6 +77,16 @@ class CallAnalyticsEngine:
             "embedding": embedding.tolist(),
             "all_intents": dict(zip(classification['labels'], classification['scores']))
         }
+
+        return {
+            "clean_text": clean_text,
+            "intent": top_intent,
+            "confidence": round(confidence, 4),
+            "all_scores": all_scores, # ADDED for the new UI dropdown
+            "risk_level": risk_level,
+            "risk_score": risk_score
+        }
+
 
     def predict_friction_risk(self, talk_ratio: float, duration_sec: int, intent: str) -> str:
         """

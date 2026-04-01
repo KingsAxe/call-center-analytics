@@ -1,4 +1,4 @@
-# Database
+# Database & Data
 psycopg2-binary
 python-dotenv
 pandas
@@ -7,8 +7,6 @@ numpy
 # NLP & ML
 transformers
 torch
-# spacy
-# en-core-web-sm
 sentence-transformers
 scikit-learn
 hdbscan
@@ -20,7 +18,8 @@ ipykernel
 plotly
 umap-learn
 
+# Dashboard
+streamlit
 
 # Utilities
 pyyaml
-python-dotenv
