@@ -1,68 +1,54 @@
-## **CallSense-AI: Intelligence-Driven Contact Center Analytics**
+## CallSense-AI
 
 Live link[https://callsense-ai.streamlit.app/]
 
-CallSense-AI is an end-to-end NLP research pipeline and decision-support system that transforms raw call transcripts into actionable business intelligence. By leveraging unsupervised latent intent discovery and zero-shot classification, this project identifies operational friction points that traditional metrics like Average Handle Time (AHT) miss.
+CallSense-AI is an NLP analytics pipeline and Streamlit dashboard for turning raw call-center transcripts into business intelligence. The project combines behavioural feature engineering, privacy-safe transcript preprocessing, semantic intent clustering, and a friction scorecard for prioritising operational fixes.
 
-## **The Business Problem**
-Contact centers generate massive amounts of unstructured text. Traditional analytics rely on manual QA or keyword spotting, which are:
+## What The Project Does
 
-Unscalable: Only <2% of calls are usually reviewed [(https://www.sqmgroup.com/resources/library/blog/automated-vs-manual-qa-how-to-improve-accuracy-insights-and-cost-efficiency)].
+- Builds a behavioural baseline from call logs in `notebooks/01_eda_and_sql.ipynb`
+- Redacts PII, generates MPNet embeddings, and discovers latent intents in `notebooks/02_intent_discovery.ipynb`
+- Validates clustering quality and exports an executive scorecard in `notebooks/03_nlp_performance.ipynb`
+- Serves a 5-page Streamlit dashboard in `app.py`:
+  Problem, Intent Map, Friction Heatmap, Archetype Drilldown, Live Inference
 
-Reactive: Issues are found after customer churn.
+## Stack
 
-Surface-Level: High AHT is flagged, but the root cause (e.g., specific billing friction vs. technical debt) remains hidden.
+- Data: `pandas`, `numpy`, `psycopg2-binary`
+- NLP/ML: `transformers`, `torch`, `sentence-transformers`, `hdbscan`, `umap-learn`, `scikit-learn`
+- UI: `streamlit`, `plotly`
+- Config: `python-dotenv`, `pyyaml`
 
-## **The Solution**
-CallSense-AI solves this by implementing a "State Machine" pipeline across three stages:
+## Key Outputs
 
-Behavioral Intelligence: Extracting talk-to-listen ratios, sentiment volatility, and turn-based dynamics.
+- `data/processed/analytics_base.csv`
+- `data/processed/clustered_data.csv`
+- `data/processed/executive_friction_scorecard.csv`
 
-Latent Intent Discovery: Using MPNet Transformers and UMAP+HDBSCAN to discover hidden conversational archetypes without human labeling.
+## Run Locally
 
-Risk Quantification: Developing a Friction Index that correlates semantic intent with CSAT and Escalation rates to prioritize business interventions.
+1. Install dependencies.
 
-## **Key Results**
-Friction Identification: Discovered 6 distinct intent archetypes, identifying that Subscription Cancellations drove 38% of all escalations despite being only 25% of volume.
-
-Operational ROI: Identified a $3,400+ monthly loss attributed to "Talk-Ratio Overload" in technical support calls.
-
-Data Privacy: Implemented a Transformer-based NER (BERT) pipeline to ensure 100% PII redaction (Names, Emails, IDs) before any downstream analysis.
-
-## **Technical Stack**
-Models: all-mpnet-base-v2 (Embeddings), BART-Large-MNLI (Zero-Shot), BERT-base-NER (PII Redaction).
-
-Dimensionality/Clustering: UMAP & HDBSCAN.
-
-Data Pipeline: PostgreSQL (JSONB), Pandas, NumPy.
-
-Interface: Streamlit & Plotly.
-
-## **How to Run**
-1. **Environment Setup**
-Bash
-
-git clone https://github.com/your-username/call-center-analytics.git
+```bash
 pip install -r requirements.txt
+```
 
-2. **Pipeline Execution (Sequential)**
-The project is structured as a state-driven pipeline. Each step must be run to generate the checkpoint files for the 
+2. Generate or refresh the pipeline artifacts by running the notebooks in order.
 
-next:
+- `notebooks/01_eda_and_sql.ipynb`
+- `notebooks/02_intent_discovery.ipynb`
+- `notebooks/03_nlp_performance.ipynb`
 
-- notebooks/01_eda_and_sql.ipynb: Connects to DB, engineers behavioral features, and exports analytics_base.csv.
+3. Start the dashboard.
 
-
-- notebooks/02_clustering_exploration.ipynb: Performs PII redaction, generates embeddings, and discovers archetypes.     Exports clustered_data.csv.
-
-
-- notebooks/03_nlp_performance_report.ipynb: Validates clusters via Silhouette Scores and creates the final              executive_friction_scorecard.csv.
-
-3. **Launching the Dashboard**
-Once the data checkpoints are created, launch the interactive decision-support system:
-
-Bash
-
+```bash
 streamlit run app.py
+```
+
+## Notes
+
+- The dashboard expects the processed CSV files under `data/processed/`.
+- The live inference page uses the local inference stack in `src/models/inference.py`.
+- The repository also contains synthetic data utilities under `src/database/` for local experimentation.
 
 
